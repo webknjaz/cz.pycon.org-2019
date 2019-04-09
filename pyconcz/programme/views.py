@@ -18,6 +18,16 @@ def preview(request):
     )
 
 
+def social_media_generator(request):
+    speakers = Speaker.objects.prefetch_related('talks', 'workshops').order_by('full_name')
+
+    return TemplateResponse(
+        request,
+        template='programme/social_media_generator.html',
+        context={'speakers': speakers}
+    )
+
+
 def talks_list(request):
     talks = (Talk.objects.filter(is_public=True)
              .filter(is_public=True, is_backup=False)

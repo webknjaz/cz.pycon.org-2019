@@ -1,0 +1,9 @@
+{% load formatting %}
+
+{% for session in sessions %}
+    <h2>
+        <small>{{ session.type }}</small><br>
+        {{ session.title }}
+    </h2>
+    {{ session.abstract|markdown }}
+{% endfor %}

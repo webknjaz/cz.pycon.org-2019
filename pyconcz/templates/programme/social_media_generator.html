@@ -1,0 +1,70 @@
+{% extends 'programme/_base_list.html' %}
+
+
+{% load formatting %}
+
+
+{% block meta_title %}Social media generator – {{ block.super }}{% endblock %}
+
+
+{% block main %}
+    <div class="container-fluid bg-danger py-5">
+
+        {% for speaker in speakers %}
+            <div class="bg-black mx-auto mt-6 mb-2" style="width: 1200px; height: 630px; overflow: hidden;">
+                <div class="row no-gutters pc-keynoter mb-6 pl-4 pt-3" style="transform: scale(1.4);transform-origin: top left;">
+                    <div class="col-5 mt-5 order-2 ml-n5">
+                        <div class="bg-secondary pc-box-shadow text-black py-3 pl-6 mr-4 d-flex align-items-center"
+                             style="padding-left: 85px !important; height: 360px;">
+                            <h3 class="my-3 pc-keynoter-name" style="font-size:400%;">{{ speaker.full_name }}</h3>
+                        </div>
+                    </div>
+
+                    <div class="pc-keynoter-photo col-4 mb-0 order-1">
+                        <img class="img-fluid pc-img-effect" src="{{ speaker.photo.url }}" alt="">
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-black mx-auto mt-6 mb-2" style="width: 1024px; height: 512px; overflow: hidden;">
+                <div class="row no-gutters pc-keynoter mb-6 pl-3 pt-3" style="transform: scale(1.32);transform-origin: top left;">
+                    <div class="col-6 mt-5 order-2 ml-n5">
+                        <div class="bg-secondary pc-box-shadow text-black py-3 pl-6 mr-5 d-flex align-items-center"
+                             style="padding-left: 85px !important; height: 300px;">
+                            <h3 class="my-3 pc-keynoter-name" style="font-size:400%;">{{ speaker.full_name }}</h3>
+                        </div>
+                    </div>
+
+                    <div class="pc-keynoter-photo col-4 mb-0 order-1">
+                        <img class="img-fluid pc-img-effect" src="{{ speaker.photo.url }}" alt="">
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white p-3">
+
+                {{ speaker.bio|markdown }}
+
+                <p>
+                    Twitter
+                    {% if speaker.twitter %}
+                        <a href="https://twitter.com/{{ speaker.twitter }}">https://twitter.com/{{ speaker.twitter }}</a>
+                    {% endif %}
+
+                    GitHub
+                    {% if speaker.github %}
+                        <a href="https://github.com/{{ speaker.github }}">https://github.com/{{ speaker.github }}</a>
+                    {% endif %}
+                </p>
+
+                {{ speaker.short_bio|markdown }}
+
+                {% include 'programme/__social-media-generator-session.html' with sessions=speaker.talks.all %}
+                {% include 'programme/__social-media-generator-session.html' with sessions=speaker.workshops.all %}
+
+            </div>
+
+
+        {% endfor %}
+    </div>
+{% endblock %}
